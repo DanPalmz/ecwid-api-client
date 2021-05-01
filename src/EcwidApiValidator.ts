@@ -1,7 +1,7 @@
 export class EcwidApiValidator {
-  public isApiTokenValid(api_token: string): boolean {
+  public isApiTokenValid(apiToken: string): boolean {
     const tokenTypes: Array<string> = ["secret_", "public_"];
-    return tokenTypes.some((tokenType) => api_token.startsWith(tokenType));
+    return tokenTypes.some((tokenType) => apiToken.startsWith(tokenType));
   }
 
   public isStoreIdValid(store_id: string): boolean {

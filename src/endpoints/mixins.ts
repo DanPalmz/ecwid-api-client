@@ -1,5 +1,6 @@
 import { IsEndpoint, Type } from "../interfaces";
 import { joinEndpoint } from "./endpointUtils";
+import { SearchResult } from "../EcwidTypes";
 
 export function Add<T extends Type<IsEndpoint>>(base: T) {
   return class extends base {
@@ -35,49 +36,65 @@ export function Update<T extends Type<IsEndpoint>>(base: T) {
   };
 }
 
-export function GetAll<T extends Type<IsEndpoint>>(base: T) {
-  return class extends base {
-    public async getAll() {
-      return this.api.getRequest(this.endpoint);
-    }
+export function GetAll<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async getAll(): Promise<SearchResult<R>> {
+        //@ts-ignore
+        return this.api.getRequest<SearchResult<R>>(this.endpoint);
+      }
+    };
   };
 }
 
-export function GetByKeyword<T extends Type<IsEndpoint>>(base: T) {
-  return class extends base {
-    public async getByKeyword(
-      keyword: string
-      //collateItems?: boolean
-    ): Promise<any> {
-      const params = { keyword: keyword };
-      return this.api.getRequest(this.endpoint, new URLSearchParams(params));
-    }
+export function GetByKeyword<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async getByKeyword(
+        keyword: string
+        //collateItems?: boolean
+      ): Promise<SearchResult<R>> {
+        const params = { keyword: keyword };
+        //@ts-ignore
+        return this.api.getRequest<SearchResult<R>>(
+          this.endpoint,
+          new URLSearchParams(params)
+        );
+      }
+    };
   };
 }
 
-export function GetById<T extends Type<IsEndpoint>>(base: T) {
-  return class extends base {
-    public async getById(
-      item_id: string | number
-      //collateItems?: boolean
-    ): Promise<any> {
-      const endpointWithItem: string = joinEndpoint(
-        this.endpoint,
-        this.api.validator.getStringOfItemIfInt(item_id)
-      );
+export function GetById<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async getById(
+          item_id: string | number
+          //collateItems?: boolean
+      ): Promise<R> {
+        const endpointWithItem: string = joinEndpoint(
+            this.endpoint,
+            this.api.validator.getStringOfItemIfInt(item_id)
+        );
 
-      return this.api.getRequest(endpointWithItem);
-    }
+        //@ts-ignore
+        return this.api.getRequest<R>(endpointWithItem);
+      }
+    };
   };
-}
+};
 
-export function GetByParams<T extends Type<IsEndpoint>>(base: T) {
-  return class extends base {
-    public async getByParams(
-      params: Record<string, string>
-      //collateItems?: boolean
-    ): Promise<any> {
-      return this.api.getRequest(this.endpoint, new URLSearchParams(params));
-    }
+export function GetByParams<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async getByParams(
+          params: Record<string, string>
+          //collateItems?: boolean
+      ): Promise<SearchResult<R>> {
+
+        //@ts-ignore
+        return this.api.getRequest<SearchResult<R>>(this.endpoint, new URLSearchParams(params));
+      }
+    };
   };
-}
+};

@@ -7,6 +7,6 @@ class OrdersEndpoint implements IsEndpoint {
   constructor(public readonly api: EcwidApiInterface) {}
 }
 
-export class Orders extends GetAll(GetById(GetByParams(OrdersEndpoint))) {}
+//export class Orders extends GetAll(GetById(GetByParams(OrdersEndpoint))) {}
 
-export default Orders;
+//export default Orders;

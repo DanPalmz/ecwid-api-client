@@ -1,4 +1,7 @@
 export * from "./interfaces";
-import Ecwid from "./ecwid";
+export * from "./Ecwid";
+export * from "./EcwidApi";
+export * from "./EcwidTypes";
 
-export default Ecwid;
+export { ProductEndpoint } from "./endpoints/ProductEndpoint";
+//export { Orders } from "./endpoints/orders"

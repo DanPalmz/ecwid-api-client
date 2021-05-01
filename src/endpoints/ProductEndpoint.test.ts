@@ -1,15 +1,16 @@
-import EcwidApi from "../ecwid-api";
-import { apiStoreId, apiToken } from "../../tests/getEnvironment";
+import { EcwidApi } from "../EcwidApi";
+import { ecwidConfig } from "../../tests/getEnvironment";
 import { getSampleData, getSampleItemIdOrNull } from "../../tests/getHelpers";
-import { Products as Endpoint } from "./products";
+import { ProductEndpoint as Endpoint } from "./ProductEndpoint";
+import { Product } from "../EcwidTypes";
 
 test("if environment is valid", () => {
-  expect(apiStoreId).toBeDefined();
-  expect(apiToken).toBeDefined();
+  expect(ecwidConfig.apiStoreId).toBeDefined();
+  expect(ecwidConfig.apiToken).toBeDefined();
 });
 
 // Compose Environment
-const ecwid = new EcwidApi(apiToken, apiStoreId);
+const ecwid = new EcwidApi(ecwidConfig);
 const endpoint = new Endpoint(ecwid);
 
 // Per endpoint settings..
@@ -18,14 +19,14 @@ const sampleSearchKey = "sku";
 const modifyValue = { name: "New Name" };
 const delay = () => new Promise((res) => setTimeout(res, 3000));
 
-describe("endpoint: Products", () => {
+describe("endpoint: ProductEndpoint", () => {
   test("has initiailised the EcwidApi", () => {
-    expect(endpoint.api.apiStoreId).toEqual(apiStoreId);
+    expect(endpoint.api.apiStoreId).toEqual(ecwidConfig.apiStoreId);
   });
 
   test("will getAll items", async () => {
-    const itemList: any = await endpoint.getAll();
-    expect(itemList.data).toHaveProperty("total");
+    const itemList = await endpoint.getAll();
+    expect(itemList).toHaveProperty("total");
   });
 
   test("will search for item and delete if it exists", async () => {
@@ -68,7 +69,7 @@ describe("endpoint: Products", () => {
       expect(updateResult.data.updateCount).toEqual(1);
       if (updateResult.status == 200 && updateResult.data.updateCount == 1) {
         const confirmItem = await endpoint.getById(itemId);
-        expect(confirmItem.data).toMatchObject(modifyValue);
+        expect(confirmItem).toMatchObject(modifyValue);
       }
     }
   });

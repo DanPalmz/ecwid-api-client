@@ -1,4 +1,4 @@
-import { EcwidApiValidator } from "./ecwid-api-validator";
+import { EcwidApiValidator } from "./EcwidApiValidator";
 import { AxiosInstance } from "axios";
 
 export declare const Type: FunctionConstructor;
@@ -13,6 +13,12 @@ export type Type<T> = new (...args: any[]) => T;
 export interface IsEndpoint {
   endpoint: string;
   readonly api: EcwidApiInterface;
+}
+
+export interface EcwidConfig {
+  apiToken: string;
+  apiStoreId: string | number;
+  apiBaseUrl?: string;
 }
 
 export interface EcwidApiInterface {

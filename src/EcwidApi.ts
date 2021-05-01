@@ -1,38 +1,37 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { EcwidApiValidator } from "./ecwid-api-validator";
-import { EcwidApiInterface } from "./interfaces";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { EcwidApiValidator } from "./EcwidApiValidator";
+import { EcwidApiInterface, EcwidConfig } from "./interfaces";
+import { SearchResult } from "./EcwidTypes";
 
 export class EcwidApi implements EcwidApiInterface {
-  apiBaseUrl: string;
+  readonly apiBaseUrl: string;
+  public readonly apiToken;
+  public readonly apiStoreId;
   validator: EcwidApiValidator;
   readonly httpClient: AxiosInstance;
   readonly apiPageLimit: string = "100";
 
-  constructor(
-    public apiToken: string,
-    public apiStoreId: string,
-    base_url?: string
-  ) {
+  constructor({ apiToken, apiStoreId, apiBaseUrl }: EcwidConfig) {
     this.validator = new EcwidApiValidator();
-    this.apiBaseUrl = base_url
-      ? base_url
-      : `https://app.ecwid.com/api/v3/${apiStoreId}/`;
 
     if (!this.validator.isApiTokenValid(apiToken)) {
       throw new Error("apiToken is not in a valid format");
     }
+    this.apiToken = apiToken;
+    this.apiStoreId = this.validator.getStringOfItemIfInt(apiStoreId);
 
-    if (!this.validator.isStoreIdValid(apiStoreId)) {
-      throw new Error("apiStoreId is not in a valid number");
-    }
+    this.apiBaseUrl = apiBaseUrl
+      ? apiBaseUrl
+      : `https://app.ecwid.com/api/v3/${this.apiStoreId}/`;
+
+    // if (!this.validator.isStoreIdValid(apiStoreId)) {
+    //   throw new Error("apiStoreId is not in a valid number");
+    // }
 
     this.httpClient = this.createHttpClient(this.apiBaseUrl);
   }
 
-  async getRequest(
-    endpoint: string,
-    payload?: URLSearchParams
-  ): Promise<object> {
+  async getRequest<T>(endpoint: string, payload?: URLSearchParams): Promise<T> {
     if (!payload) {
       payload = new URLSearchParams();
     }
@@ -40,8 +39,11 @@ export class EcwidApi implements EcwidApiInterface {
     payload.set("limit", this.apiPageLimit);
 
     try {
-      return this.httpClient.get(endpoint, { params: payload });
-      //.then(res => res.data)
+      const response: AxiosResponse<T> = await this.httpClient.get<T>(
+        endpoint,
+        { params: payload }
+      );
+      return response.data;
     } catch (err) {
       console.error(`Error fetching ${endpoint} with ${err.message}`);
       throw err;
@@ -99,4 +101,4 @@ export class EcwidApi implements EcwidApiInterface {
   }
 }
 
-export default EcwidApi;
+//export default EcwidApi;
