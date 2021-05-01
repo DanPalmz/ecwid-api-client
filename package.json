@@ -1,8 +1,8 @@
 {
   "name": "ecwid-api",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-alpha1",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "tsc",
@@ -15,7 +15,7 @@
   "dependencies": {
     "axios": "^0.21.1"
   },
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "outdir": "dist",
   "devDependencies": {
     "@types/jest": "^26.0.23",

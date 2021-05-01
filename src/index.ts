@@ -1,1 +1,4 @@
-export * from "./ecwid";
+export * from "./interfaces";
+import Ecwid from "./ecwid";
+
+export default Ecwid;
