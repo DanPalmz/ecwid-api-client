@@ -6,6 +6,10 @@ export interface SearchResult<T> {
   items: T[];
 }
 
+export interface DeleteStatus {
+  deleteCount: number;
+}
+
 // const myTestSearch: SearchResult<Partial<Product>> = {
 //   total: 1,
 //   count: 1,

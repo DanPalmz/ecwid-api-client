@@ -1,6 +1,6 @@
 import { IsEndpoint, RequestParameters, Type } from "../interfaces";
 import { joinEndpoint } from "./endpointUtils";
-import { SearchResult } from "../EcwidTypes";
+import { DeleteStatus, SearchResult } from "../EcwidTypes";
 
 export function Add<T extends Type<IsEndpoint>>(base: T) {
   return class extends base {
@@ -12,12 +12,13 @@ export function Add<T extends Type<IsEndpoint>>(base: T) {
 
 export function Delete<T extends Type<IsEndpoint>>(base: T) {
   return class extends base {
-    public async delete(item_id: string | number): Promise<any> {
+    public async delete(item_id: string | number): Promise<DeleteStatus> {
       const endpointWithItem: string = joinEndpoint(
         this.endpoint,
         this.api.validator.getStringOfItemIfInt(item_id)
       );
 
+      // @ts-ignore
       return this.api.deleteRequest(endpointWithItem);
     }
   };

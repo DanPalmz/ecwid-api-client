@@ -38,7 +38,7 @@ describe("endpoint: ProductEndpoint", () => {
 
       const deleteResult = await endpoint.delete(itemId);
       // console.log(deleteResult.data);
-      expect(deleteResult.data.deleteCount).toEqual(1);
+      expect(deleteResult.deleteCount).toEqual(1);
     }
   });
 

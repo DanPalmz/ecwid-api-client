@@ -5,6 +5,7 @@ import {
   EcwidConfig,
   RequestParameters,
 } from "./interfaces";
+import { DeleteStatus } from "./EcwidTypes";
 
 export class EcwidApi implements EcwidApiInterface {
   public readonly apiStoreId;
@@ -54,9 +55,12 @@ export class EcwidApi implements EcwidApiInterface {
     }
   }
 
-  async deleteRequest(endpoint: string): Promise<object> {
+  async deleteRequest(endpoint: string): Promise<DeleteStatus> {
     try {
-      return await this.httpClient.delete(endpoint);
+      const response: AxiosResponse<DeleteStatus> = await this.httpClient.delete<DeleteStatus>(
+        endpoint
+      );
+      return response.data;
     } catch (err) {
       console.error(`Error deleting ${endpoint} with ${err.message}`);
       throw err;
