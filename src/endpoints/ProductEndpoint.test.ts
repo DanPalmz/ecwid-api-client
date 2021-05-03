@@ -64,10 +64,10 @@ describe("endpoint: ProductEndpoint", () => {
 
     if (itemId) {
       const updateResult = await endpoint.update(itemId, modifyValue);
-      console.log(updateResult.data);
+      console.log(updateResult);
 
-      expect(updateResult.data.updateCount).toEqual(1);
-      if (updateResult.status == 200 && updateResult.data.updateCount == 1) {
+      expect(updateResult.updateCount).toEqual(1);
+      if (updateResult.updateCount == 1) {
         const confirmItem = await endpoint.getById(itemId);
         expect(confirmItem).toMatchObject(modifyValue);
       }

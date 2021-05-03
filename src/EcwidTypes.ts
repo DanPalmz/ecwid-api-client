@@ -10,6 +10,10 @@ export interface DeleteStatus {
   deleteCount: number;
 }
 
+export interface UpdateStatus {
+  updateCount: number;
+}
+
 // const myTestSearch: SearchResult<Partial<Product>> = {
 //   total: 1,
 //   count: 1,

@@ -5,7 +5,7 @@ import {
   EcwidConfig,
   RequestParameters,
 } from "./interfaces";
-import { DeleteStatus } from "./EcwidTypes";
+import { DeleteStatus, UpdateStatus } from "./EcwidTypes";
 
 export class EcwidApi implements EcwidApiInterface {
   public readonly apiStoreId;
@@ -76,9 +76,13 @@ export class EcwidApi implements EcwidApiInterface {
     }
   }
 
-  async putRequest(endpoint: string, values: any): Promise<object> {
+  async putRequest(endpoint: string, values: any): Promise<UpdateStatus> {
     try {
-      return await this.httpClient.put(endpoint, values);
+      const response: AxiosResponse<UpdateStatus> = await this.httpClient.put<UpdateStatus>(
+        endpoint,
+        values
+      );
+      return response.data;
     } catch (err) {
       console.error(`Error updating ${endpoint} with ${err.message}`);
       throw err;
