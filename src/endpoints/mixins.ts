@@ -1,12 +1,14 @@
-import { IsEndpoint, RequestParameters, Type } from "../interfaces";
+import { IsEndpoint, ItemValues, RequestParameters, Type } from "../interfaces";
 import { joinEndpoint } from "./endpointUtils";
 import { DeleteStatus, SearchResult, UpdateStatus } from "../EcwidTypes";
 
-export function Add<T extends Type<IsEndpoint>>(base: T) {
-  return class extends base {
-    public async add(item: any): Promise<any> {
-      return this.api.postRequest(this.endpoint, item);
-    }
+export function Add<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async add(item: Partial<R>): Promise<any> {
+        return this.api.postRequest(this.endpoint, item);
+      }
+    };
   };
 }
 
@@ -28,7 +30,7 @@ export function Update<T extends Type<IsEndpoint>>(base: T) {
   return class extends base {
     public async update(
       item_id: string | number,
-      item: any
+      item: ItemValues
     ): Promise<UpdateStatus> {
       const endpointWithItem: string = joinEndpoint(
         this.endpoint,

@@ -5,6 +5,7 @@ export declare const Type: FunctionConstructor;
 export type Type<T> = new (...args: any[]) => T;
 
 export type RequestParameters = Record<string, any>;
+export type ItemValues = Record<string, any>;
 
 // export interface EcwidEndpointProperties {
 //     api: EcwidApi,
