@@ -1,9 +1,10 @@
 import { EcwidApiValidator } from "./EcwidApiValidator";
-import { AxiosInstance } from "axios";
 
 export declare const Type: FunctionConstructor;
 
 export type Type<T> = new (...args: any[]) => T;
+
+export type RequestParameters = Record<string, any>;
 
 // export interface EcwidEndpointProperties {
 //     api: EcwidApi,
@@ -18,7 +19,7 @@ export interface IsEndpoint {
 export interface EcwidConfig {
   apiToken: string;
   apiStoreId: string | number;
-  apiBaseUrl?: string;
+  apiCustomBaseUrl?: string;
 }
 
 export interface EcwidApiInterface {
@@ -28,11 +29,11 @@ export interface EcwidApiInterface {
 }
 
 export interface EcwidApiInterface {
-  apiBaseUrl: string;
+  // apiBaseUrl: string;
   validator: EcwidApiValidator;
-  httpClient: AxiosInstance;
-  apiPageLimit: string;
-  apiToken: string;
+  // httpClient: AxiosInstance;
+  // apiPageLimit: string;
+  // apiToken: string;
   apiStoreId: string;
 
   getRequest(endpoint: string, payload?: URLSearchParams): Promise<object>;

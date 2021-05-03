@@ -1,4 +1,4 @@
-import { IsEndpoint, Type } from "../interfaces";
+import { IsEndpoint, RequestParameters, Type } from "../interfaces";
 import { joinEndpoint } from "./endpointUtils";
 import { SearchResult } from "../EcwidTypes";
 
@@ -54,12 +54,9 @@ export function GetByKeyword<R>() {
         keyword: string
         //collateItems?: boolean
       ): Promise<SearchResult<R>> {
-        const params = { keyword: keyword };
+        const params: RequestParameters = { keyword: keyword };
         //@ts-ignore
-        return this.api.getRequest<SearchResult<R>>(
-          this.endpoint,
-          new URLSearchParams(params)
-        );
+        return this.api.getRequest<SearchResult<R>>(this.endpoint, params);
       }
     };
   };
@@ -69,12 +66,12 @@ export function GetById<R>() {
   return function <T extends Type<IsEndpoint>>(base: T) {
     return class extends base {
       public async getById(
-          item_id: string | number
-          //collateItems?: boolean
+        item_id: string | number
+        //collateItems?: boolean
       ): Promise<R> {
         const endpointWithItem: string = joinEndpoint(
-            this.endpoint,
-            this.api.validator.getStringOfItemIfInt(item_id)
+          this.endpoint,
+          this.api.validator.getStringOfItemIfInt(item_id)
         );
 
         //@ts-ignore
@@ -82,19 +79,18 @@ export function GetById<R>() {
       }
     };
   };
-};
+}
 
 export function GetByParams<R>() {
   return function <T extends Type<IsEndpoint>>(base: T) {
     return class extends base {
       public async getByParams(
-          params: Record<string, string>
-          //collateItems?: boolean
+        params: RequestParameters
+        //collateItems?: boolean
       ): Promise<SearchResult<R>> {
-
         //@ts-ignore
-        return this.api.getRequest<SearchResult<R>>(this.endpoint, new URLSearchParams(params));
+        return this.api.getRequest<SearchResult<R>>(this.endpoint, params);
       }
     };
   };
-};
+}
