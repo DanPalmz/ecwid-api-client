@@ -1,5 +1,5 @@
 import { EcwidApiInterface, IsEndpoint } from "../interfaces";
-import { Product } from "../EcwidTypes";
+import { Product } from "../types";
 import {
   Add,
   Delete,
@@ -7,57 +7,25 @@ import {
   GetById,
   GetByKeyword,
   GetByParams,
+  Mixins,
   Update,
 } from "./mixins";
+
+const mixinList: Mixins[] = [
+  "Add",
+  "Update",
+  "Delete",
+  "GetAll",
+  "GetById",
+  "GetByKeyword",
+  "GetByParams",
+];
 
 class ProductsEndpoint implements IsEndpoint {
   endpoint: string = "products";
 
   constructor(public readonly api: EcwidApiInterface) {}
 }
-
-// export function GetTest<R>() {
-//   return function <T extends Type<IsEndpoint>>(base: T) {
-//     return class extends base {
-//       public async getByKeyword(
-//         keyword: string
-//         //collateItems?: boolean
-//       ): Promise<SearchResult<R>> {
-//         const params = { keyword: keyword };
-//         //@ts-ignore
-//         return this.api.getRequest<SearchResult<R>>(
-//           this.endpoint,
-//           new URLSearchParams(params)
-//         );
-//       }
-//
-//       public async getAll(): Promise<SearchResult<R>> {
-//         //@ts-ignore
-//         return this.api.getRequest<SearchResult<R>>(this.endpoint);
-//       }
-//
-//       public async getById(
-//         item_id: string | number
-//         //collateItems?: boolean
-//       ): Promise<R> {
-//         const endpointWithItem: string = joinEndpoint(
-//           this.endpoint,
-//           this.api.validator.getStringOfItemIfInt(item_id)
-//         );
-//
-//         //@ts-ignore
-//         return this.api.getRequest<R>(endpointWithItem);
-//       }
-//     };
-//   };
-// }
-
-// Various test bits
-//export class ProductEndpoint extends GetAll(GetById(GetByKeyword(GetByParams(ProductsEndpoint)))) {};
-//export class ProductEndpoint extends GetAll(ProductsEndpoint){}
-//export default ProductEndpoint;
-
-//export class ProductEndpoint extends GetTest<Product>()(ProductsEndpoint) {}
 
 export class GetProducts extends GetAll<Product>()(
   GetById<Product>()(
@@ -68,3 +36,10 @@ export class GetProducts extends GetAll<Product>()(
 export class ProductEndpoint extends Add<Product>()(
   Update(Delete(GetProducts))
 ) {}
+
+// Various test bits
+//export class ProductEndpoint extends GetAll(GetById(GetByKeyword(GetByParams(ProductsEndpoint)))) {};
+//export class ProductEndpoint extends GetAll(ProductsEndpoint){}
+//export default ProductEndpoint;
+
+//export class ProductEndpoint extends GetTest<Product>()(ProductsEndpoint) {}

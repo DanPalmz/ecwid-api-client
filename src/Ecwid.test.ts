@@ -1,6 +1,5 @@
 import { Ecwid } from "./Ecwid";
 import { ecwidConfig } from "../tests/getEnvironment";
-import { Product, SearchResult } from "./EcwidTypes";
 
 test("test environment valid", () => {
   expect(ecwidConfig.apiStoreId).toBeDefined();
@@ -14,6 +13,6 @@ test("will initiailise api", () => {
 
 test("will return products", async () => {
   const ecwid = new Ecwid(ecwidConfig);
-  const productList: SearchResult<Product> = await ecwid.products.getAll();
+  const productList = await ecwid.products.getAll();
   expect(productList).toHaveProperty("total");
 });

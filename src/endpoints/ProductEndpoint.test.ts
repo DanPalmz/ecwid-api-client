@@ -12,6 +12,7 @@ test("if environment is valid", () => {
 const ecwid = new EcwidApi(ecwidConfig);
 const endpoint = new Endpoint(ecwid);
 
+
 // Per endpoint settings..
 const sampleData: any = getSampleData("tests/samplejson/product.json");
 const sampleSearchKey = "sku";

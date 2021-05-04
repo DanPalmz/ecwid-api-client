@@ -5,7 +5,16 @@ import {
   DeleteStatus,
   SearchResult,
   UpdateStatus,
-} from "../EcwidTypes";
+} from "../types";
+
+export type Mixins =
+  | "Add"
+  | "Delete"
+  | "Update"
+  | "GetAll"
+  | "GetByKeyword"
+  | "GetById"
+  | "GetByParams";
 
 // Notes on Generics Used:
 // <R>:  Item type to add / update / return (Product, Order etc).

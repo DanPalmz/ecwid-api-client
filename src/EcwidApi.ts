@@ -5,7 +5,7 @@ import {
   EcwidConfig,
   RequestParameters,
 } from "./interfaces";
-import { DeleteStatus, UpdateStatus } from "./EcwidTypes";
+import { DeleteStatus, UpdateStatus } from "./types";
 
 export class EcwidApi implements EcwidApiInterface {
   public readonly apiStoreId;
