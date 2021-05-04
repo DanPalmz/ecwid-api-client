@@ -5,6 +5,7 @@ import {
   EcwidConfig,
   RequestParameters,
 } from "./interfaces";
+import { DeleteStatus, UpdateStatus } from "./EcwidTypes";
 
 export class EcwidApi implements EcwidApiInterface {
   public readonly apiStoreId;
@@ -49,34 +50,47 @@ export class EcwidApi implements EcwidApiInterface {
 
       return response.data;
     } catch (err) {
-      console.error(`Error fetching ${endpoint} with ${err.message}`);
+      console.error(`Error fetching ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }
 
-  async deleteRequest(endpoint: string): Promise<object> {
+  async deleteRequest(endpoint: string): Promise<DeleteStatus> {
     try {
-      return await this.httpClient.delete(endpoint);
+      const response: AxiosResponse<DeleteStatus> = await this.httpClient.delete<DeleteStatus>(
+        endpoint
+      );
+      return response.data;
     } catch (err) {
-      console.error(`Error deleting ${endpoint} with ${err.message}`);
+      console.error(`Error deleting ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }
 
-  async postRequest(endpoint: string, values: any): Promise<object> {
+  async postRequest<T>(endpoint: string, values: any): Promise<T> {
     try {
-      return await this.httpClient.post(endpoint, values);
+      const response: AxiosResponse<T> = await this.httpClient.post(
+        endpoint,
+        values
+      );
+      return response.data;
     } catch (err) {
-      console.error(`Error posting item to ${endpoint} with ${err.message}`);
+      console.error(
+        `Error posting item to ${endpoint} with message: ${err.message}`
+      );
       throw err;
     }
   }
 
-  async putRequest(endpoint: string, values: any): Promise<object> {
+  async putRequest(endpoint: string, values: any): Promise<UpdateStatus> {
     try {
-      return await this.httpClient.put(endpoint, values);
+      const response: AxiosResponse<UpdateStatus> = await this.httpClient.put<UpdateStatus>(
+        endpoint,
+        values
+      );
+      return response.data;
     } catch (err) {
-      console.error(`Error updating ${endpoint} with ${err.message}`);
+      console.error(`Error updating ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }

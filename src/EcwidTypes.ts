@@ -6,6 +6,22 @@ export interface SearchResult<T> {
   items: T[];
 }
 
+export interface DeleteStatus {
+  deleteCount: number;
+}
+
+export interface UpdateStatus {
+  updateCount: number;
+}
+
+export interface CreateStatus {
+  id: number;
+}
+
+export interface CreateStatusOrder extends CreateStatus {
+  orderId?: string;
+}
+
 // const myTestSearch: SearchResult<Partial<Product>> = {
 //   total: 1,
 //   count: 1,

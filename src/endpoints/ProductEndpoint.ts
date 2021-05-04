@@ -1,6 +1,5 @@
-import { EcwidApiInterface, IsEndpoint, Type } from "../interfaces";
-import { Product, SearchResult } from "../EcwidTypes";
-import { joinEndpoint } from "./endpointUtils";
+import { EcwidApiInterface, IsEndpoint } from "../interfaces";
+import { Product } from "../EcwidTypes";
 import {
   Add,
   Delete,
@@ -66,4 +65,6 @@ export class GetProducts extends GetAll<Product>()(
   )
 ) {}
 
-export class ProductEndpoint extends Add(Update(Delete(GetProducts))) {}
+export class ProductEndpoint extends Add<Product>()(
+  Update(Delete(GetProducts))
+) {}

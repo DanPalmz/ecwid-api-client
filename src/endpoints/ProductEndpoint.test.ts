@@ -2,7 +2,6 @@ import { EcwidApi } from "../EcwidApi";
 import { ecwidConfig } from "../../tests/getEnvironment";
 import { getSampleData, getSampleItemIdOrNull } from "../../tests/getHelpers";
 import { ProductEndpoint as Endpoint } from "./ProductEndpoint";
-import { Product } from "../EcwidTypes";
 
 test("if environment is valid", () => {
   expect(ecwidConfig.apiStoreId).toBeDefined();
@@ -29,6 +28,12 @@ describe("endpoint: ProductEndpoint", () => {
     expect(itemList).toHaveProperty("total");
   });
 
+  test("will search by a parameter", async () => {
+    const itemList = await endpoint.getByParams({ dateFrom: "2010-01-01" });
+    //console.log(`items created since 2010: ${itemList.total}`);
+    expect(itemList).toHaveProperty("total");
+  });
+
   test("will search for item and delete if it exists", async () => {
     const searchString = sampleData[sampleSearchKey];
     const itemId = await getSampleItemIdOrNull(endpoint, searchString);
@@ -37,20 +42,14 @@ describe("endpoint: ProductEndpoint", () => {
       expect(typeof itemId).toEqual("number");
 
       const deleteResult = await endpoint.delete(itemId);
-      // console.log(deleteResult.data);
-      expect(deleteResult.data.deleteCount).toEqual(1);
+      // console.log(deleteResult.deleteCount);
+      expect(deleteResult.deleteCount).toEqual(1);
     }
   });
 
   test("will add sample item to store", async () => {
     const result = await endpoint.add(sampleData);
-
-    expect(result.status).toEqual(200);
-    if (result.status == 200) {
-      const itemId = result.data.id;
-
-      expect(typeof itemId).toEqual("number");
-    }
+    expect(typeof result.id).toEqual("number");
   });
 
   test("will modify data for item", async () => {
@@ -60,14 +59,14 @@ describe("endpoint: ProductEndpoint", () => {
     const searchString = sampleData[sampleSearchKey];
     const itemId = await getSampleItemIdOrNull(endpoint, searchString);
 
-    expect(typeof itemId).toEqual("number");
+    expect(itemId).toBeDefined();
 
     if (itemId) {
       const updateResult = await endpoint.update(itemId, modifyValue);
-      console.log(updateResult.data);
+      //console.log(updateResult);
 
-      expect(updateResult.data.updateCount).toEqual(1);
-      if (updateResult.status == 200 && updateResult.data.updateCount == 1) {
+      expect(updateResult.updateCount).toEqual(1);
+      if (updateResult.updateCount == 1) {
         const confirmItem = await endpoint.getById(itemId);
         expect(confirmItem).toMatchObject(modifyValue);
       }
