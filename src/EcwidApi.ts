@@ -50,7 +50,7 @@ export class EcwidApi implements EcwidApiInterface {
 
       return response.data;
     } catch (err) {
-      console.error(`Error fetching ${endpoint} with ${err.message}`);
+      console.error(`Error fetching ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }
@@ -62,16 +62,22 @@ export class EcwidApi implements EcwidApiInterface {
       );
       return response.data;
     } catch (err) {
-      console.error(`Error deleting ${endpoint} with ${err.message}`);
+      console.error(`Error deleting ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }
 
-  async postRequest(endpoint: string, values: any): Promise<object> {
+  async postRequest<T>(endpoint: string, values: any): Promise<T> {
     try {
-      return await this.httpClient.post(endpoint, values);
+      const response: AxiosResponse<T> = await this.httpClient.post(
+        endpoint,
+        values
+      );
+      return response.data;
     } catch (err) {
-      console.error(`Error posting item to ${endpoint} with ${err.message}`);
+      console.error(
+        `Error posting item to ${endpoint} with message: ${err.message}`
+      );
       throw err;
     }
   }
@@ -84,7 +90,7 @@ export class EcwidApi implements EcwidApiInterface {
       );
       return response.data;
     } catch (err) {
-      console.error(`Error updating ${endpoint} with ${err.message}`);
+      console.error(`Error updating ${endpoint} with message: ${err.message}`);
       throw err;
     }
   }

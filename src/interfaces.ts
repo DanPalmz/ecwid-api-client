@@ -5,12 +5,16 @@ export declare const Type: FunctionConstructor;
 export type Type<T> = new (...args: any[]) => T;
 
 export type RequestParameters = Record<string, any>;
-export type ItemValues = Record<string, any>;
-
-// export interface EcwidEndpointProperties {
-//     api: EcwidApi,
-//     validator: EcwidApiValidator
+// Future - specific instead of any??
+// export type RequestParameters = {
+//   keyword?: string;
+//   dateFrom?: string;
+//   dateTo?: string;
+//   createdFrom?: number
+//   createdTo?: number
 // }
+
+export type ItemValues = Record<string, any>;
 
 export interface IsEndpoint {
   endpoint: string;
@@ -25,25 +29,13 @@ export interface EcwidConfig {
 
 export interface EcwidApiInterface {
   validator: EcwidApiValidator;
-
-  getRequest(endpoint: string, payload?: URLSearchParams): Promise<object>;
-}
-
-export interface EcwidApiInterface {
-  // apiBaseUrl: string;
-  validator: EcwidApiValidator;
-  // httpClient: AxiosInstance;
-  // apiPageLimit: string;
-  // apiToken: string;
   apiStoreId: string;
 
-  getRequest(endpoint: string, payload?: URLSearchParams): Promise<object>;
+  getRequest(endpoint: string, payload?: RequestParameters): Promise<object>;
 
   deleteRequest(endpoint: string): Promise<object>;
 
   postRequest(endpoint: string, values: any): Promise<object>;
 
   putRequest(endpoint: string, values: any): Promise<object>;
-
-  //private createHttpClient(baseUrl: string): AxiosInstance;
 }

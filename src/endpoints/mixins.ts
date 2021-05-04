@@ -1,12 +1,25 @@
 import { IsEndpoint, ItemValues, RequestParameters, Type } from "../interfaces";
 import { joinEndpoint } from "./endpointUtils";
-import { DeleteStatus, SearchResult, UpdateStatus } from "../EcwidTypes";
+import {
+  CreateStatus,
+  DeleteStatus,
+  SearchResult,
+  UpdateStatus,
+} from "../EcwidTypes";
+
+// Notes on Generics Used:
+// <R>:  Item type to add / update / return (Product, Order etc).
+// <T>:  Endpoint class to which we are adding this Mixin..
+// Eg: GetAll<R> adds getAll(): R to endpoint T.
 
 export function Add<R>() {
   return function <T extends Type<IsEndpoint>>(base: T) {
     return class extends base {
-      public async add(item: Partial<R>): Promise<any> {
-        return this.api.postRequest(this.endpoint, item);
+      public async add(item: Partial<R>): Promise<CreateStatus> {
+        // Note may need to override this fn to make
+        // it CreateStatusOrders for Orders.
+        // @ts-ignore
+        return this.api.postRequest<CreateStatus>(this.endpoint, item);
       }
     };
   };
