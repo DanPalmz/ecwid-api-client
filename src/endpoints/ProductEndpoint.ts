@@ -7,19 +7,18 @@ import {
   GetById,
   GetByKeyword,
   GetByParams,
-  Mixins,
   Update,
 } from "./mixins";
 
-const mixinList: Mixins[] = [
-  "Add",
-  "Update",
-  "Delete",
-  "GetAll",
-  "GetById",
-  "GetByKeyword",
-  "GetByParams",
-];
+// const mixinList: Mixins[] = [
+//   "Add",
+//   "Update",
+//   "Delete",
+//   "GetAll",
+//   "GetById",
+//   "GetByKeyword",
+//   "GetByParams",
+// ];
 
 class ProductsEndpoint implements IsEndpoint {
   endpoint: string = "products";
@@ -36,10 +35,3 @@ export class GetProducts extends GetAll<Product>()(
 export class ProductEndpoint extends Add<Product>()(
   Update(Delete(GetProducts))
 ) {}
-
-// Various test bits
-//export class ProductEndpoint extends GetAll(GetById(GetByKeyword(GetByParams(ProductsEndpoint)))) {};
-//export class ProductEndpoint extends GetAll(ProductsEndpoint){}
-//export default ProductEndpoint;
-
-//export class ProductEndpoint extends GetTest<Product>()(ProductsEndpoint) {}
