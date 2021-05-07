@@ -16,16 +16,9 @@ export interface UpdateStatus {
 
 export interface CreateStatus {
   id: number;
-}
-
-export interface CreateStatusOrder extends CreateStatus {
   orderId?: string;
 }
 
-// const myTestSearch: SearchResult<Partial<ProductTypes>> = {
-//   total: 1,
-//   count: 1,
-//   offset: 0,
-//   limit: 100,
-//   items: [{ created: "123" }],
-// };
+// export interface CreateStatusOrder extends CreateStatus {
+//   orderId?: string;
+// }

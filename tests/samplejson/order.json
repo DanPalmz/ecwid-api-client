@@ -1,0 +1,38 @@
+{
+  "subtotal": 179.95,
+  "total": 179.95,
+  "email": "example@example.com",
+  "paymentMethod": "",
+  "tax": 0,
+  "paymentStatus": "AWAITING_PAYMENT",
+  "fulfillmentStatus": "AWAITING_PROCESSING",
+  "items": [
+    {
+      "price": 179.95,
+      "weight": 0,
+      "sku": "0006",
+      "quantity": 1,
+      "name": "SAMPLE. Sunglasses"
+    }
+  ],
+  "billingPerson": {
+    "name": "John Smith",
+    "companyName": "Imaginary Company",
+    "street": "Hedgehog Street, 1",
+    "city": "Bucket",
+    "countryCode": "US",
+    "postalCode": "90002",
+    "stateOrProvinceCode": "CA",
+    "phone": "11111111111"
+  },
+  "shippingPerson": {
+    "name": "John Smith",
+    "companyName": "Imaginary Company",
+    "street": "W 3d st",
+    "city": "New York",
+    "countryCode": "US",
+    "postalCode": "10001",
+    "stateOrProvinceCode": "NY",
+    "phone": "11111111111"
+  }
+}
