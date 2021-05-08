@@ -27,17 +27,15 @@ if (productSearch.total > 0) {
 }
 ```
 
-![Sample Tooling Example](./docs/CodePrompting.png?raw=true)
-
 ## List of endpoints and commands enabled:
 
 ```
 * Ecwid.customers
     * add(Partial<Customer>) => CreateStatus
     * delete(customerId) => DeleteStatus
-    * getAll() => SearchResult<OrderEntry>  (result.items contains customer array);
+    * getAll() => SearchResult<Customer>  (result.items contains customer array);
     * getById(customerId) => Customer
-    * getByKeyword("keyword") => SearchResult<OrderEntry>
+    * getByKeyword("keyword") => SearchResult<Customer>
     * getByParams({keyword: "keyword"}) => SearchResult<OrderEntry>
     * update(Partial<OrderEntry>) => UpdateStatus  
 * Ecwid.orders
