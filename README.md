@@ -31,20 +31,43 @@ if (productSearch.total > 0) {
 
 ## List of endpoints and commands enabled:
 
-* customers
-
 ```
-  * add(Partial<Customer>) => CreateStatus
-  * delete(customerId) => DeleteStatus
-  * getAll() => SearchResult<Customer>  (result.items contains customer array);
-  * getById(customerId) => Customer
-  * getByKeyword("keyword") => SearchResult<Customer>
-  * getByParams({keyword: "keyword"}) => SearchResult<Customer>
-  * update(Partial<Customer>) => UpdateStatus  
+* Ecwid.customers
+    * add(Partial<Customer>) => CreateStatus
+    * delete(customerId) => DeleteStatus
+    * getAll() => SearchResult<OrderEntry>  (result.items contains customer array);
+    * getById(customerId) => Customer
+    * getByKeyword("keyword") => SearchResult<OrderEntry>
+    * getByParams({keyword: "keyword"}) => SearchResult<OrderEntry>
+    * update(Partial<OrderEntry>) => UpdateStatus  
+* Ecwid.orders
+    * add(Partial<OrderEntry>) => CreateStatus
+    * delete(orderId) => DeleteStatus
+    * getAll() => SearchResult<OrderEntry>  (result.items contains OrderEntry array);
+    * getById(orderId) => OrderEntry
+    * getByKeyword("keyword") => SearchResult<OrderEntry>
+    * getByParams({keyword: "keyword"}) => SearchResult<OrderEntry>
+    * update(Partial<OrderEntry>) => UpdateStatus
+* Ecwid.products
+    * add(Partial<Product>) => CreateStatus
+    * delete(productId) => DeleteStatus
+    * getAll() => SearchResult<Product>  (result.items contains Product array);
+    * getById(productId) => Product
+    * getByKeyword("keyword") => SearchResult<Product>
+    * getByParams({keyword: "keyword"}) => SearchResult<Product>
+    * update(Partial<Product>) => UpdateStatus
+* Ecwid.producttypes
+    * add(Partial<ProductType>) => CreateStatus
+    * delete(ProductTypeId) => DeleteStatus
+    * getAll() => ProductType[]  (result is an array of ProductTypes);
+    * getById(typeId) => ProductType
+    * update(Partial<ProductType>) => UpdateStatus
 ```
 
-* orders
-* products
-* producttypes
+### To be completed:
 
+* Check OrderID will work with "strings" returned - and accept them as input.
+* Add product variations
+* Add store detail access
+* Add image uploading to various endpoints
 
