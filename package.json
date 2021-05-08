@@ -1,6 +1,6 @@
 {
-  "name": "ecwid-api",
-  "version": "0.0.2",
+  "name": "ecwid-api-client",
+  "version": "0.0.5-alpha2",
   "description": "",
   "main": "./dist/src/index.js",
   "scripts": {

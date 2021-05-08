@@ -1,7 +1,7 @@
 import { EcwidApi } from "../EcwidApi";
 import { ecwidConfig } from "../../tests/getEnvironment";
-import { getSampleData, getSampleItemIdOrNull } from "../../tests/getHelpers";
-import { ProductEndpoint as Endpoint } from "./ProductEndpoint";
+import { getSampleData } from "../../tests/getHelpers";
+import { ProductTypeEndpoint as Endpoint } from "./ProductTypesEndpoint";
 
 test("if environment is valid", () => {
   expect(ecwidConfig.apiStoreId).toBeDefined();
@@ -12,38 +12,44 @@ test("if environment is valid", () => {
 const ecwid = new EcwidApi(ecwidConfig);
 const endpoint = new Endpoint(ecwid);
 
-
 // Per endpoint settings..
-const sampleData: any = getSampleData("tests/samplejson/product.json");
-const sampleSearchKey = "sku";
-const modifyValue = { name: "New Name" };
+const sampleData: any = getSampleData("tests/samplejson/producttype.json");
+const sampleSearchKey = "name";
+const modifyValue = {
+  attributes: [
+    {
+      name: "Test Update TS",
+      type: "CUSTOM",
+      show: "DESCR",
+    },
+  ],
+};
+
 const delay = () => new Promise((res) => setTimeout(res, 3000));
 
-describe("endpoint: ProductEndpoint", () => {
+describe("endpoint: ProductTypeEndpoint", () => {
   test("has initiailised the EcwidApi", () => {
     expect(endpoint.api.apiStoreId).toEqual(ecwidConfig.apiStoreId);
   });
 
   test("will getAll items", async () => {
     const itemList = await endpoint.getAll();
-    expect(itemList).toHaveProperty("total");
-  });
-
-  test("will search by a parameter", async () => {
-    const itemList = await endpoint.getByParams({ dateFrom: "2010-01-01" });
-    //console.log(`items created since 2010: ${itemList.total}`);
-    expect(itemList).toHaveProperty("total");
+    expect(itemList.length).toBeGreaterThanOrEqual(1);
   });
 
   test("will search for item and delete if it exists", async () => {
     const searchString = sampleData[sampleSearchKey];
-    const itemId = await getSampleItemIdOrNull(endpoint, searchString);
+    const itemList = await endpoint.getAll();
 
-    if (itemId) {
+    const item = itemList.find((item) => {
+      return item.name === searchString;
+    });
+
+    if (item) {
+      const itemId = item.id;
       expect(typeof itemId).toEqual("number");
 
       const deleteResult = await endpoint.delete(itemId);
-      // console.log(deleteResult.deleteCount);
       expect(deleteResult.deleteCount).toEqual(1);
     }
   });
@@ -58,18 +64,24 @@ describe("endpoint: ProductEndpoint", () => {
     await delay();
 
     const searchString = sampleData[sampleSearchKey];
-    const itemId = await getSampleItemIdOrNull(endpoint, searchString);
+    const itemList = await endpoint.getAll();
 
-    expect(itemId).toBeDefined();
+    const item = itemList.find((item) => {
+      return item.name === searchString;
+    });
+
+    const itemId = item?.id;
 
     if (itemId) {
       const updateResult = await endpoint.update(itemId, modifyValue);
-      //console.log(updateResult);
 
       expect(updateResult.updateCount).toEqual(1);
       if (updateResult.updateCount == 1) {
         const confirmItem = await endpoint.getById(itemId);
-        expect(confirmItem).toMatchObject(modifyValue);
+
+        expect(
+          confirmItem?.attributes?.some(({ name }) => name === "Test Update TS")
+        ).toBe(true);
       }
     }
   });

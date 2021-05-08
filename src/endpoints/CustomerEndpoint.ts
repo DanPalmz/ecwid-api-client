@@ -1,5 +1,4 @@
 import { EcwidApiInterface, IsEndpoint } from "../interfaces";
-import { Product } from "../types";
 import {
   Add,
   Delete,
@@ -9,6 +8,7 @@ import {
   GetByParams,
   Update,
 } from "./mixins";
+import { Customer } from "../types";
 
 // const mixinList: Mixins[] = [
 //   "Add",
@@ -20,18 +20,18 @@ import {
 //   "GetByParams",
 // ];
 
-class ProductsEndpoint implements IsEndpoint {
-  endpoint: string = "products";
+class CustomersEndpoint implements IsEndpoint {
+  endpoint: string = "customers";
 
   constructor(public readonly api: EcwidApiInterface) {}
 }
 
-export class GetProducts extends GetAll<Product>()(
-  GetById<Product>()(
-    GetByKeyword<Product>()(GetByParams<Product>()(ProductsEndpoint))
+export class GetCustomers extends GetAll<Customer>()(
+  GetById<Customer>()(
+    GetByKeyword<Customer>()(GetByParams<Customer>()(CustomersEndpoint))
   )
 ) {}
 
-export class ProductEndpoint extends Add<Product>()(
-  Update(Delete(GetProducts))
+export class CustomerEndpoint extends Add<Customer>()(
+  Update(Delete(GetCustomers))
 ) {}

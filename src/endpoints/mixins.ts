@@ -5,10 +5,20 @@ import {
   DeleteStatus,
   SearchResult,
   UpdateStatus,
-} from "../EcwidTypes";
+} from "../types";
+
+export type Mixins =
+  | "Add"
+  | "Delete"
+  | "Update"
+  | "GetAll"
+  | "GetAllAsItemArray" // Used for ProductTypes
+  | "GetByKeyword"
+  | "GetById"
+  | "GetByParams";
 
 // Notes on Generics Used:
-// <R>:  Item type to add / update / return (Product, Order etc).
+// <R>:  Item type to add / update / return (ProductTypes, Order etc).
 // <T>:  Endpoint class to which we are adding this Mixin..
 // Eg: GetAll<R> adds getAll(): R to endpoint T.
 
@@ -62,6 +72,17 @@ export function GetAll<R>() {
       public async getAll(): Promise<SearchResult<R>> {
         //@ts-ignore
         return this.api.getRequest<SearchResult<R>>(this.endpoint);
+      }
+    };
+  };
+}
+
+export function GetAllAsItemArray<R>() {
+  return function <T extends Type<IsEndpoint>>(base: T) {
+    return class extends base {
+      public async getAll(): Promise<R[]> {
+        //@ts-ignore
+        return this.api.getRequest<R[]>(this.endpoint);
       }
     };
   };

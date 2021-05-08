@@ -1,5 +1,3 @@
-import { SearchResult } from "../src/EcwidTypes";
-
 export function getSampleData(filename: string): object {
   const fs = require("fs");
 
@@ -12,7 +10,7 @@ export async function getSampleItemIdOrNull<T>(
   searchString: string
 ): Promise<number | null> {
   //@ts-ignore
-  const result: SearchResult<T> = await endpoint.getByKeyword(searchString);
+  const result = await endpoint.getByKeyword(searchString);
 
   if (result.count === 0) {
     return null;
