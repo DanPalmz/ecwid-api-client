@@ -1,22 +1,30 @@
 {
   "name": "ecwid-api-client",
-  "version": "0.0.5-alpha2",
-  "description": "",
-  "main": "./dist/src/index.js",
+  "version": "0.0.5",
+  "description": "TypeScript client for the Ecwid E-commerce REST API",
+  "keywords": [
+    "ecwid",
+    "api",
+    "client",
+    "shop"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "main": "./dist/cjs/index.js",
   "scripts": {
-    "build": "tsc",
-    "prepublish": "tsc",
+    "build": "npm run build:cjs",
+    "build:cjs": "tsc -p tsconfig.json",
+    "build:es6": "tsc -p tsconfig-es6.json",
     "prepare": "npm run build",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "Dan Palmer",
+  "author": "Dan Palmer <ecwid@danpalmz.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1"
   },
-  "types": "./dist/src/index.d.ts",
-  "outdir": "dist",
+  "types": "./dist/cjs/index.d.ts",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.1",
@@ -25,5 +33,10 @@
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.5",
     "typescript": "^4.2.4"
+  },
+  "homepage": "https://github.com/DanPalmz/ecwid-api-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanPalmz/ecwid-api-client.git"
   }
 }

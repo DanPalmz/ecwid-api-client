@@ -1,4 +1,4 @@
-import { EcwidApiValidator } from "./EcwidApiValidator";
+import { EcwidApiValidator } from "../src/EcwidApiValidator";
 
 const ecwidApiValidator = new EcwidApiValidator();
 

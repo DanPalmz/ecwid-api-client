@@ -1,5 +1,5 @@
-import { Ecwid } from "./Ecwid";
-import { ecwidConfig } from "../tests/getEnvironment";
+import { Ecwid } from "../src";
+import { ecwidConfig } from "./getEnvironment";
 
 test("test environment valid", () => {
   expect(ecwidConfig.apiStoreId).toBeDefined();

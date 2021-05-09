@@ -1,7 +1,7 @@
-import { EcwidApi } from "../EcwidApi";
-import { ecwidConfig } from "../../tests/getEnvironment";
-import { getSampleData } from "../../tests/getHelpers";
-import { ProductTypeEndpoint as Endpoint } from "./ProductTypesEndpoint";
+import { EcwidApi } from "../src";
+import { ecwidConfig } from "./getEnvironment";
+import { getSampleData } from "./getHelpers";
+import { ProductTypeEndpoint as Endpoint } from "../src/endpoints/ProductTypesEndpoint";
 
 test("if environment is valid", () => {
   expect(ecwidConfig.apiStoreId).toBeDefined();
